@@ -11,7 +11,8 @@ $(document).on('click', '.set-desktop', function(event) {
     .removeClass('iphone-4')
     .removeClass('iphone-5')
     .removeClass('ipad')
-    .addClass('desktop');
+    .addClass('desktop')
+    .attr('style', '');
   $('.orientation-toggle').addClass('disabled')
   if (Modernizr.localstorage){
     localStorage.setItem('shapeshifter-device', 'desktop');
@@ -21,7 +22,8 @@ $(document).on('click', '.set-desktop', function(event) {
 $(document).on('click', '.set-mobile', function(event) {
   $('.frame-wrapper')
     .removeClass('desktop')
-    .addClass('mobile');
+    .addClass('mobile')
+    .attr('style', '');
   $('.orientation-toggle').removeClass('disabled')
 });
 
@@ -29,7 +31,8 @@ $(document).on('click', '.set-iphone-4', function(event) {
   $('.frame-wrapper')
     .removeClass('iphone-5')
     .removeClass('ipad')
-    .addClass('iphone-4');
+    .addClass('iphone-4')
+    .attr('style', '');
   if (Modernizr.localstorage){
     localStorage.setItem('shapeshifter-device', 'iphone-4');
   }
@@ -39,7 +42,8 @@ $(document).on('click', '.set-iphone-5', function(event) {
   $('.frame-wrapper')
     .removeClass('iphone-4')
     .removeClass('ipad')
-    .addClass('iphone-5');
+    .addClass('iphone-5')
+    .attr('style', '');
   if (Modernizr.localstorage){
     localStorage.setItem('shapeshifter-device', 'iphone-5');
   }
@@ -49,10 +53,55 @@ $(document).on('click', '.set-ipad', function(event) {
   $('.frame-wrapper')
     .removeClass('iphone-4')
     .removeClass('iphone-5')
-    .addClass('ipad');
-  if (Modernizr.localstorage){
+    .removeClass('ipad')
+    .attr('style', '');
+    if (Modernizr.localstorage){
     localStorage.setItem('shapeshifter-device', 'ipad');
   }
+});
+
+$(document).on('click', '.set-custom', function(event) {//Custom viewport size -> click
+	//$('.frame-wrapper').attr('class', 'frame-wrapper mobile iphone-5');
+	$('#customWH').toggle();
+	$('#customWH').transition({ x: -1 * $('#customWH').width()});
+  if (Modernizr.localstorage){
+  	 localStorage.setItem('shapeshifter-device', 'desktop');
+  	 localStorage.setItem('shapeshifter-orientation', 'portrait');
+  }
+});
+
+$(document).on('click', '#customWH img', function(event) {//Custom viewport size set button -> click
+	if($('#customW').val() != '' && $('#customH').val() != ''){/* Checking to make sure all values have been entered */
+		$('#customWH').transition({ x: $('#customWH').width()});
+		$('#customWH').hide();
+		 $('.frame-wrapper').css({
+		 	'width' : $('#customW').val(),
+		 	'height' : $('#customH').val(),
+		 	'padding' : '20px'
+		 });
+		 $('#customW').val('');
+		 $('#customH').val('');
+	} 
+	/* Below is a fancy looking way of telling the user to enter all values */
+	else{
+		$('#customWH')
+		.transition({ x: $('#customWH').width()}, function(){//Hides input bar
+		$('#customWH img').hide();
+		$('.customInput').hide();
+		$('#customResizeError').show().html('Please specify both width and height');
+		})
+		.transition({ x: -1 * $('#customWH').width() + 10}, function(){ //Shows input bar, displays message for 2 seconds
+			$('#customWH')
+			.transition({ x: ( -1 * $('#customWH').width()) - 10, duration: 2000})//A little feedback movement to let user know that its going to go away
+			.transition({ x: $('#customWH').width(), delay: 0}, function(){//Shows regular input bar
+				$('#customResizeError').show().html('');
+				$('#customWH img').show();
+				$('.customInput').show();
+			})
+			.transition({ x: -1 * $('#customWH').width()});
+		});
+	} 
+	/* End Else */
 });
 
 $(document).on('click', '.orientation-toggle', function(event) {
@@ -73,12 +122,25 @@ $(document).on('click', '.orientation-toggle', function(event) {
   }
 });
 
-$(document).on('click', '.set-location', function(event) {
+$(document).on('click', '#customURLContainer img', function(event) {
   var url;
-  url = prompt("Enter a new URL to browse to:", "http://");
+  url = $('#customURL').val();
   if (url.length > 0){
     $('.frame').attr('src', url);
   }
+  $('#customURLContainer').transition({ x: $('#customURLContainer').width()}, function(){
+  	$('#customURLContainer').hide();
+  });
+});
+
+$(document).on('click', '.set-location', function(event) {
+  //var url;
+  //url = prompt("Enter a new URL to browse to:", "http://");
+   $('#customURLContainer').show();
+  $('#customURLContainer').transition({ x: -1 * $('#customURLContainer').width()});
+  /*if (url.length > 0){
+    $('.frame').attr('src', url);
+  }*/
 });
 
 $(document).ready(function(){

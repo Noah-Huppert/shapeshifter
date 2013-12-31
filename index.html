@@ -8,10 +8,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>ShapeShifter</title>
     <meta name="viewport" content="width=device-width">
+    <link href='http://fonts.googleapis.com/css?family=Sonsie+One' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="./styles/shapeshifter.css">
     <script src="./scripts/vendor/modernizr.min.js"></script>
   </head>
   <body>
+	 <section class="workspace">
+      <div class="frame-wrapper desktop">
+        <div class="frame-inner">
+          <iframe src="docs.html" class="frame">
+          </iframe>
+        </div>
+      </div>
+    </section>
+
 
     <header>
       <div class="controls">
@@ -27,27 +37,35 @@
         <a href="#" class="set-mobile set-ipad" title="iPad viewport">
           <img src="images/ipad-portrait@2x.png" width="32px" height="32px" />
         </a>
+        <a href="#" class="set-custom" title="Custom viewport">
+        	<img src="images/resize2.png" width="32px" height="32px" />
+        </a>
+        <div id="customWH">
+    		<img src="images/check.png" width="58px" height="58px" />
+        	<input type="text" id="customW" class="customInput" placeholder="Width">
+        	<input type="text" id="customH" class="customInput" placeholder="Height">
+        	<div id="customResizeError">
+        		
+        	</div>
+    	</div>
         <a href="#" class="orientation-toggle set-landscape disabled" title="Change orientation">
           <img src="images/landscape@2x.png" width="32px" height="32px" />
         </a>
         <a href="#" class="set-location" title="Set location">
           <img src="images/crosshair@2x.png" width="32px" height="32px" />
         </a>
-      </div>
-    </header>
-    <section class="workspace">
-      <div class="frame-wrapper desktop">
-        <div class="frame-inner">
-          <iframe src="docs.html" class="frame">
-          </iframe>
+        <div id="customURLContainer">
+        	<img src="images/check.png" width="35px" height="35px" />
+        	<input type="text" id="customURL" placeholder="New URL to browse to">
         </div>
       </div>
-    </section>
+    </header>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="./scripts/vendor/jquery.min.js"><\/script>')</script>
     <script src="./scripts/vendor/jquery.hotkeys.js"></script>
     <script src="./scripts/shapeshifter.js"></script>
+    <script src="./scripts/vendor/jquery.transit.min.js"></script>
   </body>
 </html>
 
