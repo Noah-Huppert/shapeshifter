@@ -1,3 +1,73 @@
+/* Toggle Switch Class */
+function toggleSwitch(selector, optionalAction){
+	/* Adds in semantic html */
+	$(selector).html('<div class="switchSlider"><div class="switchOn switchState">ON</div><div class="switchOff switchState">OFF</div></div>');
+	$(selector).attr('data-state', 'false');
+	$(selector).addClass('noSelect');
+	
+	$(selector + ' .switchSlider').transition({ x: -40});
+	
+	this.state = $(selector).attr('data-state');
+	
+	$(selector).click(function(){
+		switch($(this).attr('data-state')){
+			case "true"://Turning off
+				$('.switchSlider').transition({ x: -40});
+				$(this).attr('data-state', 'false');
+			break;
+			
+			case "false"://Turning on
+				$('.switchSlider').transition({ x: 0});
+				$(this).attr('data-state', 'true');
+			break;
+			
+			default://Turning off
+				$('.switchSlider').transition({ x: -40});
+				$(this).attr('data-state', 'false');
+			break;
+		}
+		
+		this.state = $(selector).attr('data-state');
+		
+		if (typeof optionalAction === 'undefined') {
+		
+		}else{
+			optionalAction(this);	
+		}
+	});
+	
+	this.setState = function(newState){
+		this.state = newState;
+		$(this).attr('data-state', newState);
+		
+		if(newState == "true"){
+			$('.switchSlider').transition({ x: 0});
+		}
+		if(newState == "false"){
+			$('.switchSlider').transition({ x: -40});
+		}
+	};
+}
+
+//Setting up settings
+
+/* Note:
+ * The JS code for auto reload runs in an iframe.
+ * This is so other JS functions can run in the 
+ * parent without interupting the auto refresh code
+ */
+var autoReload = new toggleSwitch('#autoReload', function(toggleSwitch){
+	if(toggleSwitch.state == 'true'){
+		$('#watchFiles').click();
+		
+		if (window.File && window.FileReader && window.FileList && window.Blob) {
+		  // Great success! All the File APIs are supported.
+		} else {
+		  alert('The File APIs are not fully supported in this browser.');
+		}
+	}
+});
+
 $(document).on('click', '.controls a', false);
 
 $(document).on('click', '.set-desktop, .set-mobile', function(event){
@@ -144,22 +214,26 @@ $(document).on('click', '.set-location', function(event) {
 });
 
 $(document).ready(function(){
-  if (window.location.origin != 'http://cobyism.com' && window.location.href != 'http://localhost:4000/'){
-    $('.frame').attr('src', '../');
-  }
-  if (Modernizr.localstorage){
-    device = localStorage.getItem('shapeshifter-device');
-    orientation = localStorage.getItem('shapeshifter-orientation');
-    $("body").removeClass('transitions');
-    $(".set-" + device).click();
-    if (orientation == "landscape"){
-      $(".orientation-toggle").click();
-    }
-    $("body").addClass('transitions');
-  }
-  if (getUrlParam('url') != ""){
-    $('.frame').attr('src', getUrlParam('url'));
-  }
+	/* Temp script for settings dev */
+	$('#settings').transition({ x: -1 * $('#settings').width() });
+	
+	/* End temp script */
+  	if (window.location.origin != 'http://cobyism.com' && window.location.href != 'http://localhost:4000/'){
+    	$('.frame').attr('src', '../');
+  	}
+  	if (Modernizr.localstorage){
+    	device = localStorage.getItem('shapeshifter-device');
+    	orientation = localStorage.getItem('shapeshifter-orientation');
+    	$("body").removeClass('transitions');
+    	$(".set-" + device).click();
+    	if (orientation == "landscape"){
+      	$(".orientation-toggle").click();
+    	}
+    	$("body").addClass('transitions');
+  	}
+  	if (getUrlParam('url') != ""){
+    	$('.frame').attr('src', getUrlParam('url'));
+  	}
 });
 
 function getUrlParam(name){

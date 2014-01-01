@@ -10,6 +10,8 @@
     <meta name="viewport" content="width=device-width">
     <link href='http://fonts.googleapis.com/css?family=Sonsie+One' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="./styles/shapeshifter.css">
+    <link rel="stylesheet" href="./styles/bootstrap.min.css">
+    <link rel="stylesheet" href="./styles/bootstrap-theme.min.css">
     <script src="./scripts/vendor/modernizr.min.js"></script>
   </head>
   <body>
@@ -58,14 +60,25 @@
         	<img src="images/check.png" width="35px" height="35px" />
         	<input type="text" id="customURL" placeholder="New URL to browse to">
         </div>
+        <a href="#" id="settingsButton" title="Settings">
+        	<span class="glyphicon glyphicon-cog"></span>
+        </a>
+        <div id="settings">
+        	<label>Auto Refresh</label>
+        	<div class="switch" id="autoReload"></div>
+        	<input type="file" id="watchFiles" class="hidden" multiple>
+        </div>
       </div>
     </header>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="./scripts/vendor/jquery.min.js"><\/script>')</script>
     <script src="./scripts/vendor/jquery.hotkeys.js"></script>
+    <script src="./scripts/jquery transit/jquery.transit.min.js"></script>
+    <script src"./scripts/bootstrap/bootstrap.min.js"></script>
     <script src="./scripts/shapeshifter.js"></script>
-    <script src="./scripts/vendor/jquery.transit.min.js"></script>
+    
+    <iframe style="width: 0; height: 0; display: none;" src="autoRefresh.html"></iframe>
   </body>
 </html>
 
